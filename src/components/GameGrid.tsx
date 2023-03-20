@@ -1,27 +1,8 @@
 import { Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import apiCilent from "../services/api-cilent";
-
-interface Game {
-  id: number;
-  name: string;
-}
-
-interface FetchGamesResponse {
-  count: number;
-  results: Game[];
-}
+import useGames from "../hooks/useGames";
 
 const GameGrid = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    apiCilent
-      .get<FetchGamesResponse>("/games")
-      .then((res) => setGames(res.data.results))
-      .catch((err) => setError(err.message));
-  });
+  const { games, error } = useGames();
 
   return (
     <>
